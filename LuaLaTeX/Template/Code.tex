@@ -1,0 +1,50 @@
+\documentclass{ltjsarticle}
+\usepackage{listings,xcolor,inconsolata}
+\usepackage[OT1]{fontenc}
+\definecolor{Green}{HTML}{009e73} %キーワードハイライトの色定義
+%listingsの書式設定(詳細情報はググって下さい)
+\lstset{
+  language=C, %C言語のキーワードハイライトを用いる
+  basicstyle=\ttfamily\Large,
+  keywordstyle=\bfseries\color{Green},
+  showstringspaces=false,
+  frame={tb},
+  xrightmargin=0em,
+  xleftmargin=0em,
+  columns=fixed,
+  basewidth=0.5em,
+  lineskip=-0.5em
+}
+\begin{document}
+  %lstlisting環境内にコードを記述(例)
+  \begin{lstlisting}
+  #include <stdio.h>
+
+  int main(void) {
+    int i = 1, j = 1, k = 1, l = 4, m = 1;
+    while (i <= 3) {
+      while (j <= 5) {
+        while (k <= i) {
+          while (l >= j) {
+            printf(" ");
+            --l;
+          }
+          while (m <= j) {
+            printf("*");
+            ++m;
+          }
+          l = 4;
+          m = 1;
+          ++k;
+        }
+        printf("\n");
+        k = 1;
+        ++j;
+      }
+      j = 1;
+      ++i;
+    }
+    return 0;
+  }
+  \end{lstlisting}
+\end{document}
