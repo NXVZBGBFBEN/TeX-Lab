@@ -1,1 +1,53 @@
-\documentclass{ltjsarticle}\begin{document}\title{<科目名>\\\huge <タイトル>}\author{<学校名>\\\begin{tabular}{rl}氏名 & <氏名>\\学科 & <学科>\\学籍番号 & <学籍番号>\end{tabular}}\maketitle\end{document}
+\documentclass{ltjsarticle}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+
+%数値定義
+\newcommand{\radius}{1cm}
+\newcommand{\ratio}{0.8}
+
+%円の書式定義
+\newcommand{\circleA}{(90:\ratio*\radius) circle [radius=\radius]}
+\newcommand{\circleB}{(-150:\ratio*\radius) circle [radius=\radius]}
+\newcommand{\circleC}{(-30:\ratio*\radius) circle [radius=\radius]}
+
+%円のラベル定義
+\tikzset{set label/.style={fill=white,circle,inner sep=.5mm}}
+\newcommand{\drawLabels}{
+  \node[set label] at (90:\radius+\ratio*\radius) {A};
+  \node[set label] at (-150:\radius+\ratio*\radius) {B};
+  \node[set label] at (-30:\radius+\ratio*\radius) {C};
+}
+
+%ベン図全体の描画定義
+\newcommand{\drawVenn}[2]{
+  \begin{tikzpicture}[baseline=0pt]
+    \path[use as bounding box] (0,0) circle [radius=2.5*\radius];
+    \begin{scope}[color=gray]
+      #1
+    \end{scope}
+    \begin{scope}[color=white]
+      #2
+    \end{scope}
+    \draw \circleA \circleB \circleC;
+    \drawLabels
+  \end{tikzpicture}
+}
+
+\begin{document}
+  \begin{center}
+    \begin{align*}
+      &
+      \drawVenn{\clip \circleC; \fill \circleA; \fill \circleB;}{}
+      \drawVenn{\clip \circleC; \fill \circleA;}{}
+      \drawVenn{\clip \circleB; \fill \circleC;}{}\\
+      &
+      \drawVenn{\clip \circleC \circleA; \fill \circleB; \fill \circleC;}{}
+      \drawVenn{\fill \circleC; \fill \circleA;}{}
+      \drawVenn{\fill \circleB; \fill \circleC;}{}\\
+      &
+      \drawVenn{\fill[even odd rule] \circleA \circleB \circleC;}{\clip \circleA; \clip \circleB; \clip \circleC; \fill \circleA;}
+    \end{align*}
+  \end{center}
+\end{document}
